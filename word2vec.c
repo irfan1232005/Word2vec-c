@@ -526,3 +526,48 @@ long long ReadWordIndex(FILE *fin) {
     index = SearchVocab(word);
     return index;
 }
+
+//my main function(assumed)
+int main() {
+    int mode;
+    size_t vocab_init_bytes;
+    size_t hash_init_bytes;
+    
+    printf("========================================\n");
+    printf("     Word2Vec C Engine (Teacher Ver)    \n");
+    printf("========================================\n");
+    printf("1. TRAIN New Model (Takes hours/days)\n");
+    printf("2. PLAY with Existing Model (vectors.txt)\n");
+    printf("Select Mode: ");
+    
+    scanf("%d", &mode);
+
+    if (mode == 1) {
+        vocab_init_bytes = vocab_max_size * sizeof(struct vocab_word);
+        vocab = (struct vocab_word *)calloc(1, vocab_init_bytes);
+        if (vocab == NULL) {
+            printf("Initial vocab allocation failed\n");
+            exit(1);
+        }
+        
+        hash_init_bytes = vocab_hash_size * sizeof(int);
+        vocab_hash = (int *)calloc(1, hash_init_bytes);
+        if (vocab_hash == NULL) {
+            printf("Initial hash allocation failed\n");
+            exit(1);
+        }
+        
+        InitExpTable();
+        LearnVocabFromTrainFile();
+        InitNet();
+        InitUnigramTable();
+        TrainModel();
+    } 
+    
+    if (mode == 2) {
+        LoadModel();
+        InteractiveLoop();
+    }
+    
+    return 0;
+}
