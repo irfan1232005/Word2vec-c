@@ -1,5 +1,3 @@
-
-
 //word2vec from scratch
 
 #include <stdio.h>
@@ -534,10 +532,15 @@ int main() {
     size_t hash_init_bytes;
     
     printf("========================================\n");
+    printf("\n");
     printf("     Word2Vec C Engine (Teacher Ver)    \n");
+        printf("\n");
     printf("========================================\n");
     printf("1. TRAIN New Model (Takes hours/days)\n");
+        printf("\n");
     printf("2. PLAY with Existing Model (vectors.txt)\n");
+        printf("\n");
+    
     printf("Select Mode: ");
     
     scanf("%d", &mode);
@@ -547,6 +550,7 @@ int main() {
         vocab = (struct vocab_word *)calloc(1, vocab_init_bytes);
         if (vocab == NULL) {
             printf("Initial vocab allocation failed\n");
+            printf("\n");
             exit(1);
         }
         
